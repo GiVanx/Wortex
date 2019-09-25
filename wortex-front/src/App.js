@@ -2,6 +2,7 @@ import React from 'react';
 import Container from '@material-ui/core/Container'
 import { Input, IconButton, Paper } from '@material-ui/core';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+import { makeStyles } from '@material-ui/styles'
 
 import TranslateIcon from '@material-ui/icons/Translate';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -95,6 +96,12 @@ class WordsList extends React.Component {
   }
 }
 
+const useStyles = makeStyles({
+  searchGrid: {
+    marginBottom: 1
+  }
+});
+
 export default function App (props) {
 
   // one weird thing to note:
@@ -126,10 +133,12 @@ export default function App (props) {
     console.log({definitionDialogOpened})
   }
 
+  const classes = useStyles()
+
   return (
     <Container>
       <DefinitionDialog open={definitionDialogOpened} onClose={onCloseDefinitionDialog} word={wordToTranslate}></DefinitionDialog>
-      <Grid container spacing={2} >
+      <Grid container spacing={3} className={classes.searchGrid}>
         <Grid container item xs={12} spacing={0} alignItems='center'>
           <WordInput onAddNewWord={onAddNewWord} />
         </Grid>
