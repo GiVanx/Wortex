@@ -2,7 +2,10 @@ import React from 'react';
 import Container from '@material-ui/core/Container'
 import { Input, IconButton, Paper } from '@material-ui/core';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
+
 import TranslateIcon from '@material-ui/icons/Translate';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import List from '@material-ui/core/List'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItem from '@material-ui/core/ListItem'
@@ -56,19 +59,28 @@ class WordsList extends React.Component {
     this.props.onTranslate(word);
   }
 
+  onDeleteWordButtonClick = (word) => {
+    this.props.onDeleteWord(word);
+  }
+
   render() {
     const rows = []
 
     this.props.words.forEach(word => {
       rows.push(
       <ListItem key={word.id} divider>
-        <Grid container alignItems='center' spacing='4'>
+        <Grid container alignItems='center' spacing='1'>
           <Grid item xs={10}>
             {word.value}
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <IconButton onClick={() => this.onTranslateButtonClick(word)}>
               <TranslateIcon color='primary'></TranslateIcon>
+            </IconButton>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton onClick={() => this.onDeleteWordButtonClick(word)}>
+              <DeleteIcon color='primary'></DeleteIcon>
             </IconButton>
           </Grid>
         </Grid>
@@ -98,6 +110,11 @@ export default function App (props) {
     setWords(newwords)
   }
 
+  function onDeleteWord(word) {
+
+    setWords({words}.words.filter(w => w.id !== word.id));
+  }
+
   function onCloseDefinitionDialog() {
     setOpenDefinitionDialog(false);
   }
@@ -117,7 +134,7 @@ export default function App (props) {
           <WordInput onAddNewWord={onAddNewWord} />
         </Grid>
       </Grid>
-      <WordsList onTranslate={onTranslateWord} words={words} />
+      <WordsList onTranslate={onTranslateWord} onDeleteWord={onDeleteWord} words={words} />
     </Container>
   );
 }
