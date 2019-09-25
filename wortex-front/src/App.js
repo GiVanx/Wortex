@@ -1,9 +1,9 @@
 import React from 'react';
 import Container from '@material-ui/core/Container'
 import { Input, IconButton, Paper } from '@material-ui/core';
-import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import { makeStyles } from '@material-ui/styles'
 
+import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import TranslateIcon from '@material-ui/icons/Translate';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -12,6 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItem from '@material-ui/core/ListItem'
 import Grid from "@material-ui/core/Grid"
 import DefinitionDialog from './DefinitionDialog';
+import FilterPopover from './FilterPopover'
 
 /*
 > App
@@ -40,13 +41,16 @@ class WordInput extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Grid item xs={11}>
+        <Grid item xs={10}>
           <Input placeholder="Neu wort" fullWidth onChange={this.onInputTextChange} />
         </Grid>
         <Grid item xs={1}>
-          <IconButton aria-label="addNewWord" onClick={this.onAddNewWordButtonClick}>
+          <IconButton onClick={this.onAddNewWordButtonClick}>
             <AddCircleOutlineOutlinedIcon color="primary"  />
           </IconButton>
+        </Grid>
+        <Grid item xs={1}>
+          <FilterPopover filterOptions={this.props.filterOptions}></FilterPopover>
         </Grid>
       </React.Fragment>
     )
@@ -111,6 +115,10 @@ export default function App (props) {
   const [definitionDialogOpened, setOpenDefinitionDialog] = React.useState(false);
   const [wordToTranslate, setWordToTranslate] = React.useState("");
 
+  const filterOptions = [
+    'Newest', 'Oldest', 'Alphabetical'
+  ]
+
   function onAddNewWord(newWord) {
 
     let newwords = [...{words}.words, newWord];
@@ -140,10 +148,10 @@ export default function App (props) {
       <DefinitionDialog open={definitionDialogOpened} onClose={onCloseDefinitionDialog} word={wordToTranslate}></DefinitionDialog>
       <Grid container spacing={3} className={classes.searchGrid}>
         <Grid container item xs={12} spacing={0} alignItems='center'>
-          <WordInput onAddNewWord={onAddNewWord} />
+          <WordInput onAddNewWord={onAddNewWord} filterOptions={filterOptions}/>
         </Grid>
       </Grid>
-      <WordsList onTranslate={onTranslateWord} onDeleteWord={onDeleteWord} words={words} />
+      <WordsList onTranslate={onTranslateWord} onDeleteWord={onDeleteWord} words={words}/>
     </Container>
   );
 }
