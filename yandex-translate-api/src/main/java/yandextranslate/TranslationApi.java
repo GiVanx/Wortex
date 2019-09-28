@@ -2,9 +2,9 @@ package yandextranslate;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import utils.Util;
 import yandextranslate.exceptions.TranslationException;
 import yandextranslate.model.Translation;
+import yandextranslate.utils.Util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
