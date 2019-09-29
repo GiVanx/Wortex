@@ -1,4 +1,4 @@
-package yandextranslate;
+package yandextranslate.model;
 
 public enum Language {
 
@@ -11,7 +11,7 @@ public enum Language {
         this.lang = lang;
     }
 
-    String value() {
+    public String value() {
         return lang;
     }
 }

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import yandextranslate.exceptions.TranslationException;
 import yandextranslate.model.Translation;
+import yandextranslate.model.TranslationDirection;
 import yandextranslate.utils.Util;
 
 import java.io.BufferedReader;

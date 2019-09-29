@@ -1,4 +1,4 @@
-package yandextranslate;
+package yandextranslate.model;
 
 import lombok.Getter;
 import lombok.Setter;

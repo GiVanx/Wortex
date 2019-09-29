@@ -17,6 +17,9 @@ public class Tr {
     @SerializedName("mean")
     List<Meaning> meanings;
 
+    @SerializedName("ex")
+    List<Example> examples;
+
     @Override
     public String toString() {
         return "{" +
@@ -24,6 +27,7 @@ public class Tr {
                 ", pos='" + pos + '\'' +
                 ", synonyms=" + synonyms +
                 ", meanings=" + meanings +
+                ", examples=" + examples +
                 '}';
     }
 }

@@ -1,6 +1,6 @@
 package yandextranslate.exceptions;
 
-import yandextranslate.TranslationDirection;
+import yandextranslate.model.TranslationDirection;
 
 public class TranslationException extends RuntimeException {
 
