@@ -27,6 +27,8 @@ public class TranslationApi implements TranslateApiIface {
     private static TranslationApi translationApi;
     private Gson gson = new GsonBuilder().create();
 
+    private TranslationApi() {}
+
     public static TranslateApiIface translateApi(String apiKey) {
         if (translationApi == null) {
             translationApi = new TranslationApi();
@@ -42,10 +44,13 @@ public class TranslationApi implements TranslateApiIface {
     @Override
     public Translation translate(String text, TranslationDirection translationDirection) throws TranslationException {
 
+        System.out.println("TranslationApi.translate: " + text + ", dir: " + translationDirection);
         Map<String, String> params = new HashMap<>();
         params.put(LANG_PARAM, translationDirection.getSource().value() + LANG_PARAM_DELIMITER + translationDirection.getTarget().value());
         params.put(TEXT_PARAM, text);
         params.put(API_KEY_PARAM, yandexTranslateApiKey);
+
+        System.out.println("params: " + params);
 
         String reqParams = params.entrySet().stream().map(Util.funcWrapper(e -> URLEncoder.encode(e.getKey(), "UTF-8") + "=" +
                 URLEncoder.encode(e.getValue(), "UTF-8"))).collect(Collectors.joining("&"));

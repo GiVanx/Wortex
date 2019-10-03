@@ -1,4 +1,4 @@
-package com.wortex.backend.web.translator;
+package com.wortex.backend.web.translator.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +13,5 @@ public class Translation {
     private String pos;
     private String transcript;
 
-    private List<Definition> translations;
+    private List<Definition> definitions;
 }

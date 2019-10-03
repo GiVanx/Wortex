@@ -1,4 +1,4 @@
-package com.wortex.backend.web.translator;
+package com.wortex.backend.web.translator.model;
 
 import lombok.Getter;
 import lombok.Setter;
