@@ -16,4 +16,14 @@ public class Translation {
     private String transcript;
 
     private List<Definition> definitions;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "word='" + word + '\'' +
+                ", pos='" + pos + '\'' +
+                ", transcript='" + transcript + '\'' +
+                ", definitions=" + definitions +
+                '}';
+    }
 }

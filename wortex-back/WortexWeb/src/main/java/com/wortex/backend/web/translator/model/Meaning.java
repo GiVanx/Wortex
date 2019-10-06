@@ -12,4 +12,11 @@ import lombok.Setter;
 public class Meaning {
 
     private String text;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "text='" + text + '\'' +
+                '}';
+    }
 }

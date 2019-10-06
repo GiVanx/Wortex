@@ -12,4 +12,13 @@ public class Definition {
     List<Synonym> synonyms;
     List<Meaning> meanings;
     List<Example> examples;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "synonyms=" + synonyms +
+                ", meanings=" + meanings +
+                ", examples=" + examples +
+                '}';
+    }
 }

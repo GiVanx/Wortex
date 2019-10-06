@@ -10,4 +10,11 @@ import lombok.Setter;
 public class ExampleTranslation {
 
     private String text;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "text='" + text + '\'' +
+                '}';
+    }
 }

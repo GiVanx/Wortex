@@ -12,4 +12,12 @@ public class Example {
     private String text;
 
     private List<ExampleTranslation> translations;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "text='" + text + '\'' +
+                ", translations=" + translations +
+                '}';
+    }
 }

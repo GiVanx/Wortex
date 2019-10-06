@@ -13,4 +13,12 @@ public class Synonym {
 
     private String text;
     private String pos;
+
+    @Override
+    public String toString() {
+        return "{" +
+                "text='" + text + '\'' +
+                ", pos='" + pos + '\'' +
+                '}';
+    }
 }
