@@ -2,6 +2,8 @@ package com.wortex.backend.web;
 
 import com.wortex.backend.web.translator.service.TranslationService;
 import com.wortex.backend.web.translator.service.TranslationServiceImpl;
+import com.wortex.backend.web.translator.service.db.DbService;
+import com.wortex.backend.web.translator.service.db.DbServiceImpl;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +22,11 @@ public class App {
     @Bean
     public TranslateApiIface yandexTranslateApi() {
         return TranslationApi.translateApi("//TRANSLATE API KEY");
+    }
+
+    @Bean
+    public DbService dbService() {
+        return new DbServiceImpl();
     }
 
     @Bean

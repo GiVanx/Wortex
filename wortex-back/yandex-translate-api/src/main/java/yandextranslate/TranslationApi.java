@@ -44,13 +44,10 @@ public class TranslationApi implements TranslateApiIface {
     @Override
     public Translation translate(String text, TranslationDirection translationDirection) throws TranslationException {
 
-        System.out.println("TranslationApi.translate: " + text + ", dir: " + translationDirection);
         Map<String, String> params = new HashMap<>();
         params.put(LANG_PARAM, translationDirection.getSource().value() + LANG_PARAM_DELIMITER + translationDirection.getTarget().value());
         params.put(TEXT_PARAM, text);
         params.put(API_KEY_PARAM, yandexTranslateApiKey);
-
-        System.out.println("params: " + params);
 
         String reqParams = params.entrySet().stream().map(Util.funcWrapper(e -> URLEncoder.encode(e.getKey(), "UTF-8") + "=" +
                 URLEncoder.encode(e.getValue(), "UTF-8"))).collect(Collectors.joining("&"));
@@ -74,7 +71,13 @@ public class TranslationApi implements TranslateApiIface {
 
             in.close();
 
-            return gson.fromJson(response.toString(), Translation.class);
+            Translation translation = gson.fromJson(response.toString(), Translation.class);
+
+            // check if word was found
+            if (translation.getDefinition().size() == 0) {
+                return null;
+            }
+            return translation;
 
         } catch (Exception e) {
             e.printStackTrace();

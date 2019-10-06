@@ -23,7 +23,12 @@ public class YandexTranslationService implements TranslationService {
     @Override
     public Translation translate(String word, TranslationDirection direction) {
 
-        return yandexTranslationToTranslatorModelMapper.map(
-                translateApi.translate(word, translationDirectionToYandexTranslationDirectionMapper.map(direction)));
+        yandextranslate.model.Translation yandexTranslation =
+                translateApi.translate(word, translationDirectionToYandexTranslationDirectionMapper.map(direction));
+
+        if (yandexTranslation == null) {
+            return null;
+        }
+        return yandexTranslationToTranslatorModelMapper.map(yandexTranslation);
     }
 }
