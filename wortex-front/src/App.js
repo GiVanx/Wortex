@@ -108,12 +108,15 @@ const useStyles = makeStyles({
 
 export default function App (props) {
 
+  const SERVER_ADDRESS = "http://localhost:8080";
+  const TRANSLATE_ENDPOINT = SERVER_ADDRESS + "/translate";
+
   // one weird thing to note:
   // for some reason, even though props.words is passed as an array, 
   // the state 'words' becomes an object: { words: Array(x) }
   const [words, setWords] = React.useState(props.words);
   const [definitionDialogOpened, setOpenDefinitionDialog] = React.useState(false);
-  const [wordToTranslate, setWordToTranslate] = React.useState("");
+  const [translation, setTranslation] = React.useState({});
 
   const filterOptions = [
     'Newest', 'Oldest', 'Alphabetical'
@@ -135,8 +138,14 @@ export default function App (props) {
   }
 
   function onTranslateWord(word) {
-    console.log('onTranslateWord()')
-    setWordToTranslate(word);
+
+    console.log("Endpoint: " + TRANSLATE_ENDPOINT + "/" + word);
+    // fetch(TRANSLATE_ENDPOINT + "/" + word)
+    //   .then(res => res.json())
+    //   .then((data) => {
+    //     setTranslation(data)
+    //   })
+
     setOpenDefinitionDialog(true);
     console.log({definitionDialogOpened})
   }
@@ -145,7 +154,7 @@ export default function App (props) {
 
   return (
     <Container>
-      <DefinitionDialog open={definitionDialogOpened} onClose={onCloseDefinitionDialog} word={wordToTranslate}></DefinitionDialog>
+      <DefinitionDialog open={definitionDialogOpened} onClose={onCloseDefinitionDialog} translation={translation}></DefinitionDialog>
       <Grid container spacing={3} className={classes.searchGrid}>
         <Grid container item xs={12} spacing={0} alignItems='center'>
           <WordInput onAddNewWord={onAddNewWord} filterOptions={filterOptions}/>
