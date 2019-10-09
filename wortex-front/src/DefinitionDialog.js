@@ -36,11 +36,11 @@ export default function DefinitionDialog(props) {
 
     function PosAndTranscript() {
         return (
-            <Grid item container xs={1}> 
-                <Grid item xs={12}>
+            <Grid item container direction="column" xs={3} alignItems="center">
+                <Grid item xs={6}>
                     {props.translation.pos}
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                     {props.translation.transcript}
                 </Grid>
             </Grid>
@@ -53,7 +53,7 @@ export default function DefinitionDialog(props) {
 
         return (
             <Grid container className={classes.header}>
-                <Grid item xs={11}>
+                <Grid item xs={9}>
                     <Typography variant="h5" className={classes.word}>
                         {props.translation.word}
                     </Typography>
