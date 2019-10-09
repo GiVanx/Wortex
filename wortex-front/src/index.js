@@ -6,10 +6,10 @@ import App from './App'
 import theme from './theme'
 
 const WORDS = [
-    {id:"1", value: "gegen"}, 
-    {id:"2", value: "wand"}, 
-    {id:"3", value: "aufstehen"}, 
-    {id:"4", value: "sehen"}]
+    {pos: "verb", word: "gegen"}, 
+    {pos:"verb", word: "wand"}, 
+    {pos:"verb", word: "aufstehen"}, 
+    {pos:"verb", word: "sehen"}]
 
 ReactDOM.render(
     <ThemeProvider theme={theme}>

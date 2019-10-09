@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import Container from '@material-ui/core/Container'
 import { Input, IconButton, Paper } from '@material-ui/core';
@@ -14,15 +16,19 @@ import Grid from "@material-ui/core/Grid"
 import DefinitionDialog from './DefinitionDialog';
 import FilterPopover from './FilterPopover'
 
-/*
-> App
-  > WordInput
-  > WordsList
-    >> WordsListRow
-*/
-const uuidv1 = require('uuid/v1')
+import type {WordDTO, TranslationDTO} from "./Types.js"
 
-class WordInput extends React.Component {
+type WordInputProps = 
+{
+  filterOptions:string[],
+  onAddNewWord: (word : string) => void
+};
+
+type WordInputState = {
+  currentInputText: string
+};
+
+class WordInput extends React.Component<WordInputProps, WordInputState> {
 
   state = {
     currentInputText: ''
@@ -35,7 +41,7 @@ class WordInput extends React.Component {
   }
 
   onAddNewWordButtonClick = () => {
-    this.props.onAddNewWord({ id: uuidv1(), value: this.state.currentInputText })
+    this.props.onAddNewWord(this.state.currentInputText)
   }
 
   render() {
@@ -57,10 +63,15 @@ class WordInput extends React.Component {
   }
 }
 
-class WordsList extends React.Component {
+type WordsListType = {
+  onTranslate: (word: string) => void,
+  onDeleteWord: (word: string) => void,
+  words: WordDTO[]
+}
+
+class WordsList extends React.Component<WordsListType> {
 
   onTranslateButtonClick = (word) => {
-    console.log('onTranslateButtonClick()')
     this.props.onTranslate(word);
   }
 
@@ -71,20 +82,20 @@ class WordsList extends React.Component {
   render() {
     const rows = []
 
-    this.props.words.forEach(word => {
+    this.props.words.forEach(wordDto => {
       rows.push(
-      <ListItem key={word.id} divider>
+      <ListItem key={wordDto.word} divider>
         <Grid container alignItems='center' spacing='1'>
           <Grid item xs={10}>
-            {word.value}
+            {wordDto.word}
           </Grid>
           <Grid item xs={1}>
-            <IconButton onClick={() => this.onTranslateButtonClick(word)}>
+            <IconButton onClick={() => this.onTranslateButtonClick(wordDto.word)}>
               <TranslateIcon color='primary'></TranslateIcon>
             </IconButton>
           </Grid>
           <Grid item xs={1}>
-            <IconButton onClick={() => this.onDeleteWordButtonClick(word)}>
+            <IconButton onClick={() => this.onDeleteWordButtonClick(wordDto.word)}>
               <DeleteIcon color='primary'></DeleteIcon>
             </IconButton>
           </Grid>
@@ -106,31 +117,34 @@ const useStyles = makeStyles({
   }
 });
 
-export default function App (props) {
+type AppProps = {
+  words: WordDTO[],
+  definitionDialogOpened: boolean,
+  translation: TranslationDTO
+}
+
+export default function App (props : AppProps) {
 
   const SERVER_ADDRESS = "http://localhost:8080";
   const TRANSLATE_ENDPOINT = SERVER_ADDRESS + "/translate";
 
-  // one weird thing to note:
-  // for some reason, even though props.words is passed as an array, 
-  // the state 'words' becomes an object: { words: Array(x) }
   const [words, setWords] = React.useState(props.words);
   const [definitionDialogOpened, setOpenDefinitionDialog] = React.useState(false);
   const [translation, setTranslation] = React.useState({});
 
+  //TODO: The filter options should be obtained from the backend
   const filterOptions = [
     'Newest', 'Oldest', 'Alphabetical'
   ]
 
   function onAddNewWord(newWord) {
 
-    let newwords = [...{words}.words, newWord];
-    setWords(newwords)
+    // TODO: to be implemented
   }
 
   function onDeleteWord(word) {
 
-    setWords({words}.words.filter(w => w.id !== word.id));
+    // TODO: to be implemented
   }
 
   function onCloseDefinitionDialog() {
@@ -140,11 +154,13 @@ export default function App (props) {
   function onTranslateWord(word) {
 
     console.log("Endpoint: " + TRANSLATE_ENDPOINT + "/" + word);
-    // fetch(TRANSLATE_ENDPOINT + "/" + word)
-    //   .then(res => res.json())
-    //   .then((data) => {
-    //     setTranslation(data)
-    //   })
+
+    fetch(TRANSLATE_ENDPOINT + "/" + word)
+      .then(res => res.json())
+      .then((data) => {
+        console.log("Endpoint response: " + data);
+        setTranslation(data);
+      })
 
     setOpenDefinitionDialog(true);
     console.log({definitionDialogOpened})
