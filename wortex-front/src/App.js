@@ -13,7 +13,7 @@ import List from '@material-ui/core/List'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItem from '@material-ui/core/ListItem'
 import Grid from "@material-ui/core/Grid"
-import DefinitionDialog from './DefinitionDialog';
+import DefinitionDialog from './TranslationDialog';
 import FilterPopover from './FilterPopover'
 
 import type {WordDTO, TranslationDTO} from "./Types.js"

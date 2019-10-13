@@ -8,22 +8,26 @@ import IconButton from '@material-ui/core/IconButton'
 import CloseIcon from '@material-ui/icons/Close'
 import Toolbar from '@material-ui/core/Toolbar'
 import { makeStyles } from '@material-ui/core/styles'
+import Definition from './Definition'
 
 export default function DefinitionDialog(props) {
 
     const [open, setOpen] = React.useState(false);
-    // const [translation, setTranslation] = React.useState({});
+    const [translation, setTranslation] = React.useState(undefined);
 
     useEffect(() => {
         console.log("open = " + props.open);
         setOpen(props.open)
-        // setTranslation(props.translation)
+        setTranslation(props.translation)
     }, [props])
 
     const useStyles = makeStyles(theme => ({
         word: {
             marginLeft: theme.spacing(2),
             flex: 1
+        },
+        appBar: {
+            position: 'relative'
         },
         header: {
             // set marginTop such that the word
@@ -33,6 +37,8 @@ export default function DefinitionDialog(props) {
             paddingBottom: theme.spacing(1)
         }
     }));
+
+    const classes = useStyles();
 
     function PosAndTranscript() {
         return (
@@ -49,8 +55,6 @@ export default function DefinitionDialog(props) {
 
     function Header() {
 
-        const classes = useStyles();
-
         return (
             <Grid container className={classes.header}>
                 <Grid item xs={9}>
@@ -63,26 +67,22 @@ export default function DefinitionDialog(props) {
         )
     }
 
+    var definitions = props.translation.definitions;
+
     return (
         <Dialog
             fullScreen
             open={open}
             onClose={props.onClose}>
-                <AppBar>
-                <Toolbar>
-                    <IconButton edge="start" onClick={() => props.onClose()}>
-                        <CloseIcon/>
-                    </IconButton>
-                    <Header />
-                </Toolbar>    
+                <AppBar className={classes.appBar}>
+                    <Toolbar>
+                        <IconButton edge="start" onClick={() => props.onClose()}>
+                            <CloseIcon/>
+                        </IconButton>
+                        <Header />
+                    </Toolbar>
                 </AppBar>
-                
-                <DialogContent>
-                    <DialogContentText>
-                        List of translations
-                    </DialogContentText>
-                </DialogContent>
+                { (definitions !== undefined) && definitions.map(d => <Definition definition={d}/>) }
         </Dialog>
     )
-
 }
